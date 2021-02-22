@@ -3,7 +3,9 @@ package com.jwetherell.algorithms.data_structures.test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import org.junit.Test;
 
@@ -17,6 +19,7 @@ public class BinaryHeapTests {
 
     @Test
     public void testMinHeap() {
+        ArrayList<HashMap<Integer, Integer>>  testBranchLogs = new ArrayList<>();
         TestData data = Utils.generateTestData(2500);
 
         String aNameMin = "Min-Heap [array]";
@@ -40,12 +43,23 @@ public class BinaryHeapTests {
                                      data.unsorted, data.sorted, data.invalid));
         assertTrue(JavaCollectionTest.testCollection(tCollectionMin, Integer.class, tNameMin,
                                                      data.unsorted, data.sorted, data.invalid));
+        testBranchLogs.add(tHeapMin.getHeapDownBranchLog());
 
         BinaryHeap.BinaryHeapTree<Integer> tHeapNull = new BinaryHeap.BinaryHeapTree<Integer>(BinaryHeap.Type.MIN);
         tHeapNull.add(10);
         tHeapNull.add(11);
         tHeapNull.clear();
         assertNull(tHeapNull.getHeadValue()); // we expect null here
+        testBranchLogs.add(tHeapNull.getHeapDownBranchLog());
+
+        // write the test branch coverage to the console
+        for(HashMap<Integer, Integer> log : testBranchLogs) {
+            System.out.println('{');
+            for(int branch : log.keySet()) {
+                String.format("%d: %d\n", branch, log.getOrDefault(branch, 0));
+            }
+            System.out.println('}');
+        }
 
     }
 
