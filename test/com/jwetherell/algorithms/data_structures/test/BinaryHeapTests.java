@@ -65,6 +65,7 @@ public class BinaryHeapTests {
 
     @Test
     public void testMaxHeap() {
+        ArrayList<HashMap<Integer, Integer>>  testBranchLogs = new ArrayList<>();
         TestData data = Utils.generateTestData(2500);
 
         String aNameMax = "Max-Heap [array]";
@@ -88,11 +89,21 @@ public class BinaryHeapTests {
                                      data.unsorted, data.sorted, data.invalid));
         assertTrue(JavaCollectionTest.testCollection(tCollectionMax, Integer.class, lNameMax,
                                                  data.unsorted, data.sorted, data.invalid));
+        testBranchLogs.add(tHeapMax.getHeapDownBranchLog());
 
         BinaryHeap.BinaryHeapTree<Integer> tHeapNull = new BinaryHeap.BinaryHeapTree<Integer>(BinaryHeap.Type.MAX);
         tHeapNull.add(10);
         tHeapNull.add(11);
         tHeapNull.clear();
         assertNull(tHeapNull.getHeadValue()); // we expect null here
+
+        // write the test branch coverage to the console
+        for(HashMap<Integer, Integer> log : testBranchLogs) {
+            System.out.println('{');
+            for(int branch : log.keySet()) {
+                System.out.print(String.format("  %d: %d\n", branch, log.getOrDefault(branch, 0)));
+            }
+            System.out.println('}');
+        }
     }
 }
