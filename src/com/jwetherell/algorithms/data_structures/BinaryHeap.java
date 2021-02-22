@@ -714,13 +714,41 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
         }
 
         /**
+         * HeapDownHelper logs branch coverage in the binary tree function heapDown()
+         */
+        private HeapDownHelper heapDownHelper = new HeapDownHelper();
+
+        public int[] getHeapDownBranchLog() {
+            return heapDownHelper.branchLog;
+        }
+
+        public void refreshHeapDownHelper() {
+            heapDownHelper = new HeapDownHelper();
+        }
+
+        private class HeapDownHelper {
+            private final static int NUM_BRANCHES = 17;
+            private int[] branchLog;
+            private HeapDownHelper() {
+                branchLog = new int[NUM_BRANCHES];
+            }
+            private void increment(int branchNum) {
+                branchLog[branchNum]++;
+            }
+        }
+
+        /**
          * Heap down the heap from this node.
          * 
          * @param nodeToHeapDown
          *            to heap down.
          */
         protected void heapDown(Node<T> nodeToHeapDown) {
-            if (nodeToHeapDown==null) return;
+            if (nodeToHeapDown==null) {
+                //log 0
+                heapDownHelper.increment(0);
+                return;
+            }
 
             Node<T> node = nodeToHeapDown;
             Node<T> heapNode = node;
@@ -729,6 +757,8 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
 
             if (left == null && right == null) {
                 // Nothing to do here
+                //log 1
+                heapDownHelper.increment(1);
                 return;
             }
 
@@ -741,39 +771,59 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
                 // Both children are greater/lesser than node
                 if ((type == Type.MIN && right.value.compareTo(left.value) < 0) || (type == Type.MAX && right.value.compareTo(left.value) > 0)) {
                     // Right is greater/lesser than left
+                    //log 2
+                    heapDownHelper.increment(2);
                     nodeToMove = right;
                 } else if ((type == Type.MIN && left.value.compareTo(right.value) < 0) || (type == Type.MAX && left.value.compareTo(right.value) > 0)) {
                     // Left is greater/lesser than right
+                    //log 3
+                    heapDownHelper.increment(3);
                     nodeToMove = left;
                 } else {
                     // Both children are equal, use right
+                    //log 4
+                    heapDownHelper.increment(4);
                     nodeToMove = right;
                 }
             } else if ((type == Type.MIN && right != null && node.value.compareTo(right.value) > 0)
                        || (type == Type.MAX && right != null && node.value.compareTo(right.value) < 0)) {
                 // Right is greater than node
+                //log 5
+                heapDownHelper.increment(5);
                 nodeToMove = right;
             } else if ((type == Type.MIN && left != null && node.value.compareTo(left.value) > 0)
                        || (type == Type.MAX && left != null && node.value.compareTo(left.value) < 0)) {
                 // Left is greater than node
+                //log 6
+                heapDownHelper.increment(6);
                 nodeToMove = left;
             }
             // No node to move, stop recursion
-            if (nodeToMove == null) return;
+            if (nodeToMove == null) {
+                //log 7
+                heapDownHelper.increment(7);
+                return;
+            }
 
             // Re-factor heap sub-tree
             Node<T> nodeParent = heapNode.parent;
             if (nodeParent == null) {
                 // heap down the root
+                //log 8
+                heapDownHelper.increment(8);
                 root = nodeToMove;
                 root.parent = null;
             } else {
                 if (nodeParent.left!=null && nodeParent.left.equals(node)) {
                     // heap down a left
+                    //log 9
+                    heapDownHelper.increment(9);
                     nodeParent.left = nodeToMove;
                     nodeToMove.parent = nodeParent;
                 } else {
                     // heap down a right
+                    //log 10
+                    heapDownHelper.increment(10);
                     nodeParent.right = nodeToMove;
                     nodeToMove.parent = nodeParent;
                 }
@@ -784,23 +834,43 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
             Node<T> nodeToMoveLeft = nodeToMove.left;
             Node<T> nodeToMoveRight = nodeToMove.right;
             if (nodeLeft!=null && nodeLeft.equals(nodeToMove)) {
+                //log 11
+                heapDownHelper.increment(11);
                 nodeToMove.right = nodeRight;
-                if (nodeRight != null) nodeRight.parent = nodeToMove;
+                if (nodeRight != null) {
+                    //log 12
+                    heapDownHelper.increment(12);
+                    nodeRight.parent = nodeToMove;
+                }
 
                 nodeToMove.left = heapNode;
             } else {
+                //log 13
+                heapDownHelper.increment(13);
                 nodeToMove.left = nodeLeft;
-                if (nodeLeft != null) nodeLeft.parent = nodeToMove;
+                if (nodeLeft != null) {
+                    //log 14
+                    heapDownHelper.increment(14);
+                    nodeLeft.parent = nodeToMove;
+                }
 
                 nodeToMove.right = heapNode;
             }
             heapNode.parent = nodeToMove;
 
             heapNode.left = nodeToMoveLeft;
-            if (nodeToMoveLeft != null) nodeToMoveLeft.parent = heapNode;
+            if (nodeToMoveLeft != null) {
+                //log 15
+                heapDownHelper.increment(15);
+                nodeToMoveLeft.parent = heapNode;
+            }
 
             heapNode.right = nodeToMoveRight;
-            if (nodeToMoveRight != null) nodeToMoveRight.parent = heapNode;
+            if (nodeToMoveRight != null) {
+                //log 16
+                heapDownHelper.increment(16);
+                nodeToMoveRight.parent = heapNode;
+            }
 
             heapDown(node);
         }
