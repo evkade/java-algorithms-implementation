@@ -56,7 +56,7 @@ public class BinaryHeapTests {
         for(HashMap<Integer, Integer> log : testBranchLogs) {
             System.out.println('{');
             for(int branch : log.keySet()) {
-                String.format("%d: %d\n", branch, log.getOrDefault(branch, 0));
+                System.out.print(String.format("  %d: %d\n", branch, log.getOrDefault(branch, 0)));
             }
             System.out.println('}');
         }
