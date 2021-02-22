@@ -1,9 +1,7 @@
 package com.jwetherell.algorithms.data_structures;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Deque;
+import java.util.*;
+import java.util.HashMap;
 import java.util.List;
 
 import com.jwetherell.algorithms.data_structures.interfaces.IHeap;
@@ -718,22 +716,20 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
          */
         private HeapDownHelper heapDownHelper = new HeapDownHelper();
 
-        public int[] getHeapDownBranchLog() {
-            return heapDownHelper.branchLog;
-        }
-
-        public void refreshHeapDownHelper() {
+        public HashMap<Integer, Integer> getHeapDownBranchLog() {
+            HashMap<Integer, Integer> log = heapDownHelper.branchLog;
             heapDownHelper = new HeapDownHelper();
+            return log;
         }
 
         private class HeapDownHelper {
             private final static int NUM_BRANCHES = 17;
-            private int[] branchLog;
+            private HashMap<Integer, Integer> branchLog;
             private HeapDownHelper() {
-                branchLog = new int[NUM_BRANCHES];
+                branchLog = new HashMap<>();
             }
             private void increment(int branchNum) {
-                branchLog[branchNum]++;
+                branchLog.put(branchNum, branchLog.containsKey(branchNum) ? branchLog.get(branchNum)+1 : 0);
             }
         }
 
