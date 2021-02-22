@@ -14,9 +14,10 @@ import com.jwetherell.algorithms.data_structures.test.common.Utils;
 import com.jwetherell.algorithms.data_structures.test.common.Utils.TestData;
 
 public class BinaryHeapTests {
-
     @Test
     public void testMinHeap() {
+
+        DataStruct ds = new DataStruct(44);
         TestData data = Utils.generateTestData(2500);
 
         String aNameMin = "Min-Heap [array]";
@@ -27,13 +28,17 @@ public class BinaryHeapTests {
         assertTrue(JavaCollectionTest.testCollection(aCollectionMin, Integer.class, aNameMin,
                                                      data.unsorted, data.sorted, data.invalid));
 
+        ds.addBooleans(aHeapMin.bools);
+
         BinaryHeap.BinaryHeapArray<Integer> aHeapNull = new BinaryHeap.BinaryHeapArray<Integer>(BinaryHeap.Type.MIN);
         aHeapNull.add(10);
         aHeapNull.add(11);
         aHeapNull.clear();
         assertNull(aHeapNull.getHeadValue()); // we expect null here
 
-        String tNameMin = "Min-Heap [tree]";
+        ds.addBooleans(aHeapNull.bools);
+
+        /*String tNameMin = "Min-Heap [tree]";
         BinaryHeap.BinaryHeapTree<Integer> tHeapMin = new BinaryHeap.BinaryHeapTree<Integer>(BinaryHeap.Type.MIN);
         Collection<Integer> tCollectionMin = tHeapMin.toCollection();
         assertTrue(HeapTest.testHeap(BinaryHeap.Type.MIN, tHeapMin, Integer.class, tNameMin,
@@ -45,13 +50,13 @@ public class BinaryHeapTests {
         tHeapNull.add(10);
         tHeapNull.add(11);
         tHeapNull.clear();
-        assertNull(tHeapNull.getHeadValue()); // we expect null here
+        assertNull(tHeapNull.getHeadValue());*/ // we expect null here
 
-    }
+    //}
 
-    @Test
-    public void testMaxHeap() {
-        TestData data = Utils.generateTestData(2500);
+    //@Test
+    //public void testMaxHeap() {
+        // TestData data = Utils.generateTestData(2500);
 
         String aNameMax = "Max-Heap [array]";
         BinaryHeap.BinaryHeapArray<Integer> aHeapMax = new BinaryHeap.BinaryHeapArray<Integer>(BinaryHeap.Type.MAX);
@@ -61,13 +66,20 @@ public class BinaryHeapTests {
         assertTrue(JavaCollectionTest.testCollection(aCollectionMax, Integer.class, aNameMax,
                                                  data.unsorted, data.sorted, data.invalid));
 
-        BinaryHeap.BinaryHeapArray<Integer> aHeapNull = new BinaryHeap.BinaryHeapArray<Integer>(BinaryHeap.Type.MAX);
+        ds.addBooleans(aHeapMax.bools);
+
+        aHeapNull = new BinaryHeap.BinaryHeapArray<Integer>(BinaryHeap.Type.MAX);
         aHeapNull.add(10);
         aHeapNull.add(11);
         aHeapNull.clear();
         assertNull(aHeapNull.getHeadValue()); // we expect null here
+        ds.addBooleans(aHeapNull.bools);
+        for (boolean b: ds.bools) {
+            System.out.println(b);
+        }
+        System.out.println(ds.getCoverage());
 
-        String lNameMax = "Max-Heap [tree]";
+        /*String lNameMax = "Max-Heap [tree]";
         BinaryHeap.BinaryHeapTree<Integer> tHeapMax = new BinaryHeap.BinaryHeapTree<Integer>(BinaryHeap.Type.MAX);
         Collection<Integer> tCollectionMax = tHeapMax.toCollection();
         assertTrue(HeapTest.testHeap(BinaryHeap.Type.MAX, tHeapMax, Integer.class, lNameMax, 
@@ -79,6 +91,6 @@ public class BinaryHeapTests {
         tHeapNull.add(10);
         tHeapNull.add(11);
         tHeapNull.clear();
-        assertNull(tHeapNull.getHeadValue()); // we expect null here
+        assertNull(tHeapNull.getHeadValue());*/  // we expect null here
     }
 }

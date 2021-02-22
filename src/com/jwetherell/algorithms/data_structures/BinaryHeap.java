@@ -45,7 +45,7 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
      * @author Justin Wetherell <phishman3579@gmail.com>
      */
     public static class BinaryHeapArray<T extends Comparable<T>> implements BinaryHeap<T> {
-
+        public boolean[] bools = new boolean[44];
         private static final int MINIMUM_SIZE = 1024;
 
         private Type type = Type.MIN;
@@ -184,25 +184,168 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
         }
 
         protected void heapDown(int index) {
+            System.out.println("heapDown");
             T value = this.array[index];
-            if (value==null)
-                return;
-
-            int leftIndex = getLeftIndex(index);
-            int rightIndex = getRightIndex(index);
-            T left = (leftIndex != Integer.MIN_VALUE && leftIndex < this.size) ? this.array[leftIndex] : null;
-            T right = (rightIndex != Integer.MIN_VALUE && rightIndex < this.size) ? this.array[rightIndex] : null;
-
-            if (left == null && right == null) {
-                // Nothing to do here
+            if (value == null) {
+                bools[0] = true;
                 return;
             }
+            // else är inräknad i alla andra fall tror jag
+            int leftIndex = getLeftIndex(index);
+            int rightIndex = getRightIndex(index);
+
+            // had to write these two checks myself to control the stuff in ternary operators
+            //T left = (leftIndex != Integer.MIN_VALUE && leftIndex < this.size) ? this.array[leftIndex] : null;
+            T left = null;
+            if (leftIndex != Integer.MIN_VALUE) {
+                bools[1] = true;
+                if (leftIndex < this.size) {
+                    left = this.array[leftIndex];
+                    bools[2] = true;
+                }
+            } else {
+                bools[3] = true;
+                left = null;
+            }
+            //T right = (rightIndex != Integer.MIN_VALUE && rightIndex < this.size) ? this.array[rightIndex] : null;
+            T right = null;
+            if (rightIndex != Integer.MIN_VALUE) {
+                bools[4] = true;
+                if (rightIndex < this.size) {
+                    bools[5] = true;
+                    right = this.array[rightIndex];
+                }
+            } else {
+                bools[6] = true;
+                right = null;
+            }
+
+            if (left == null) {
+                bools[7] = true;
+                if (right == null) {
+                    // Nothing to do here
+                    bools[8] = true;
+                    return;
+                }
+            }
+            // else inräknad i de andra fallen
 
             T nodeToMove = null;
             int nodeToMoveIndex = -1;
+
+            // this is checking row 276
+            if (type == Type.MIN) {
+                bools[9] = true;
+                if (left != null) {
+                    bools[10] = true;
+                    if (right != null) {
+                        bools[11] = true;
+                        if (value.compareTo(left) > 0) {
+                            bools[12] = true;
+                            if (value.compareTo(right) > 0) {
+                                bools[13] = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (type == Type.MAX) {
+                bools[14] = true;
+                if (left != null) {
+                    bools[15] = true;
+                    if (right != null) {
+                        bools[16] = true;
+                        if (value.compareTo(left) < 0) {
+                            bools[17] = true;
+                            if (value.compareTo(right) < 0) {
+                                bools[18] = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // this is checking row 347
+            //((type == Type.MIN && right != null && value.compareTo(right) > 0)
+                    // || (type == Type.MAX && right != null && value.compareTo(right) < 0)
+            if (type == Type.MIN) {
+                bools[29] = true;
+                if (right != null) {
+                    bools[30] = true;
+                    if (value.compareTo(right) > 0) {
+                        bools[31] = true;
+                    }
+                }
+            }
+            if (type == Type.MAX) {
+                bools[32] = true;
+                if (right != null) {
+                    bools[33] = true;
+                    if (value.compareTo(right) < 0) {
+                        bools[34] = true;
+                    }
+                }
+            }
+
+            // cheking else if ((type == Type.MIN && left != null && value.compareTo(left) > 0)
+            //                       || (type == Type.MAX && left != null && value.compareTo(left) < 0)
+
+            if (type == Type.MIN) {
+                bools[35] = true;
+                if (left != null) {
+                    bools[36] = true;
+                    if (value.compareTo(left) > 0) {
+                        bools[37] = true;
+                    }
+                }
+            }
+            if (type == Type.MAX) {
+                bools[38] = true;
+                if (left != null) {
+                    bools[39] = true;
+                    if (value.compareTo(left) < 0) {
+                        bools[40] = true;
+                    }
+                }
+            }
+
             if ((type == Type.MIN && left != null && right != null && value.compareTo(left) > 0 && value.compareTo(right) > 0)
                 || (type == Type.MAX && left != null && right != null && value.compareTo(left) < 0 && value.compareTo(right) < 0)) {
                 // Both children are greater/lesser than node
+                // test row 295
+                if (right!=null) {
+                    bools[19] = true;
+                    if (type == Type.MIN) {
+                        bools[20] = true;
+                        if (right.compareTo(left) < 0) {
+                            bools[21] = true;
+                        }
+                    }
+                    if (type == Type.MAX) {
+                        bools[22] = true;
+                        if (right.compareTo(left) > 0) {
+                            bools[23] = true;
+                        }
+                    }
+                }
+                // test row 296
+                if (left!=null) {
+                    bools[24] = true;
+                    if (type == Type.MIN) {
+                        bools[25] = true;
+                        if (left.compareTo(right) < 0) {
+                            bools[26] = true;
+                        }
+                    }
+                    if (type == Type.MAX) {
+                        bools[27] = true;
+                        if (left.compareTo(right) > 0) {
+                            bools[28] = true;
+                        }
+                    }
+                }
+
                 if ((right!=null) && 
                     ((type == Type.MIN && (right.compareTo(left) < 0)) || ((type == Type.MAX && right.compareTo(left) > 0)))
                 ) {
@@ -216,6 +359,7 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
                     nodeToMove = left;
                     nodeToMoveIndex = leftIndex;
                 } else {
+                    bools[41] = true;
                     // Both children are equal, use right
                     nodeToMove = right;
                     nodeToMoveIndex = rightIndex;
@@ -234,13 +378,14 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
                 nodeToMoveIndex = leftIndex;
             }
             // No node to move, stop recursion
-            if (nodeToMove == null)
+            if (nodeToMove == null) {
+                bools[42] = true;
                 return;
-
+            }
+            bools[43] = true;
             // Re-factor heap sub-tree
             this.array[nodeToMoveIndex] = value;
             this.array[index] = nodeToMove;
-
             heapDown(nodeToMoveIndex);
         }
 
