@@ -28,6 +28,7 @@ import com.jwetherell.algorithms.data_structures.interfaces.ITree;
 public class BinarySearchTree<T extends Comparable<T>> implements ITree<T> {
 
     private int modifications = 0;
+    public boolean[] boolArray;
 
     protected static final Random RANDOM = new Random();
 
