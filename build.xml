@@ -80,7 +80,7 @@
       </classpath>
       <formatter type="brief" usefile="false" />
       <batchtest>
-        <fileset dir="${test}" includes="**/test/*.java" excludes="**/test/AllTests.java" />
+        <fileset dir="${test}" includes="**/test/SplayTreeTests.java" excludes="**/test/AllTests.java" />
       </batchtest>
     </junit>
   </target>
