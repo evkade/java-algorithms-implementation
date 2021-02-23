@@ -917,6 +917,7 @@ public abstract class SegmentTree<D extends SegmentTree.Data> {
      * x within that segment can take a value of 2 <= x <= 6.
      */
     public static final class FlatSegmentTree<D extends Data> extends SegmentTree<D> {
+            public static boolean[] bools = new boolean[30];
 
         public FlatSegmentTree(List<D> data) {
             this(data, 1);
@@ -1066,6 +1067,7 @@ public abstract class SegmentTree<D extends SegmentTree.Data> {
 
                 return segment;
             }
+            //public boolean[] bools = new boolean[40];
 
             /**
              * {@inheritDoc}
@@ -1073,30 +1075,67 @@ public abstract class SegmentTree<D extends SegmentTree.Data> {
             @Override
             public D query(long startOfQuery, long endOfQuery) {
                 if (startOfQuery == this.start && endOfQuery == this.end) {
-                    if (this.data == null)
+                    bools[27] = true;
+                    bools[28] = true;
+                    if (this.data == null){
+                        bools[0] = true;
                         return null;
+                    }
                     final D dataToReturn = ((D) this.data.query(startOfQuery, endOfQuery));
                     return dataToReturn;
                 }
 
                 if (!this.hasChildren()) {
+                    bools[1] = true;
                     if (endOfQuery < this.start || startOfQuery > this.end) {
+                        
+                        if(startOfQuery > this.end){
+                            bools[2] = true;
+                        }
+                         if(endOfQuery < this.start ){
+                            bools[3] = true;
+                        }
                         // Ignore
                     } else {
+                        bools[4] = true;
                         D dataToReturn = null;
-                        if (this.set.size() == 0)
+                        if (this.set.size() == 0){
+                            bools[5] = true;
                             return dataToReturn;
+                        }
                         for (Segment<D> s : this.set) {
+                            bools[29] = true;
                             if (s.start >= startOfQuery && s.end <= endOfQuery) {
-                                if (dataToReturn == null)
+                                if(s.start >= startOfQuery){
+                                    bools[7] = true;
+                                }
+                                if(s.end <= endOfQuery){
+                                    bools[6] = true;
+                                }
+                                if (dataToReturn == null){
                                     dataToReturn = (D) s.data.query(startOfQuery, endOfQuery);
-                                else
+                                    bools[8] = true;
+                                }
+                                else{
+                                    bools[9] = true;
                                     dataToReturn.combined(s.data);
+                                }
                             } else if (s.start <= startOfQuery && s.end >= endOfQuery) {
-                                if (dataToReturn == null)
+                                if(s.start <= startOfQuery ){
+                                    bools[10] = true;
+                                }
+                                if(s.end >= endOfQuery){
+                                    bools[11] = true;
+                                }
+                                    
+                                if (dataToReturn == null){
                                     dataToReturn = (D) s.data.query(startOfQuery, endOfQuery);
-                                else
+                                    bools[12] = true;
+                                }
+                                else{
+                                    bools[13] = true;
                                     dataToReturn.combined(s.data);
+                                }
                             }
                         }
                         return dataToReturn;
@@ -1104,18 +1143,39 @@ public abstract class SegmentTree<D extends SegmentTree.Data> {
                 } 
 
                 if (this.hasChildren()) {
+                    bools[14] = true;
                     if (startOfQuery <= this.getLeftChild().end && endOfQuery > this.getLeftChild().end) {
+                        if(startOfQuery <= this.getLeftChild().end){
+                            bools[15] = true;
+                        }
+                        if(endOfQuery > this.getLeftChild().end){
+                            bools[16] = true;
+                        }
                         final Data q1 = this.getLeftChild().query(startOfQuery, getLeftChild().end);
                         final Data q2 = this.getRightChild().query(getRightChild().start, endOfQuery);
-                        if (q1 == null && q2 == null)
+                        if (q1 == null && q2 == null){
+                            bools[17] = true;
+                            bools[18] = true;
                             return null;
-                        if (q1 != null && q2 == null)
+                        }
+                        if (q1 != null && q2 == null){
+                            bools[19] = true;
+                            bools[20] = true;
                             return (D) q1;
-                        if (q1 == null && q2 != null)
+                        }
+                        if (q1 == null && q2 != null){
+                            bools[21] = true;
+                            bools[22] = true;
                             return (D) q2;
-                        if (q1 != null && q2 != null) 
+                        }
+                        if (q1 != null && q2 != null){ 
+                            bools[23] = true;
+                            bools[24] = true;
                             return ((D) q1.combined(q2));
+                        }
                     } else if (startOfQuery <= this.getLeftChild().end && endOfQuery <= this.getLeftChild().end) {
+                        bools[25] = true;
+                        bools[26] = true;
                         return this.getLeftChild().query(startOfQuery, endOfQuery);
                     }
                     return this.getRightChild().query(startOfQuery, endOfQuery);

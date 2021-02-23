@@ -1,5 +1,8 @@
 package com.jwetherell.algorithms.data_structures.test;
 
+
+import java.io.FileWriter;  
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -14,8 +17,10 @@ import com.jwetherell.algorithms.data_structures.SegmentTree;
 import com.jwetherell.algorithms.data_structures.SegmentTree.Data;
 import com.jwetherell.algorithms.data_structures.SegmentTree.DynamicSegmentTree;
 import com.jwetherell.algorithms.data_structures.SegmentTree.FlatSegmentTree;
+//import com.sun.imageio.plugins.common.BogusColorSpace;
 
 public class SegmentTreeTests {
+	DataStruct dataStruct = new DataStruct(30);
 
     @Test
     public void testQuadrantSegmentTree() {
@@ -45,14 +50,18 @@ public class SegmentTreeTests {
 
     private void testQuadrantSegmentTree(java.util.List<SegmentTree.Data.QuadrantData> segments) {   // Quadrant Segment tree
         FlatSegmentTree<SegmentTree.Data.QuadrantData> tree = new FlatSegmentTree<SegmentTree.Data.QuadrantData>(segments);
-
         SegmentTree.Data.QuadrantData query = tree.query(0, 3);
-        assertTrue("Quad tree query error. query=0->3 result="+query, tree, (query.quad0==1 && query.quad1==1 && query.quad2==1 && query.quad3==1));
+        dataStruct.addBooleans(tree.bools);
 
+        assertTrue("Quad tree query error. query=0->3 result="+query, tree, (query.quad0==1 && query.quad1==1 && query.quad2==1 && query.quad3==1));
+        
         query = tree.query(2, 3);
+        dataStruct.addBooleans(tree.bools);
         assertTrue("Quad tree query error. query=2->3 result="+query, tree, (query.quad0==0 && query.quad1==0 && query.quad2==1 && query.quad3==1));
 
         query = tree.query(0, 2);
+        dataStruct.addBooleans(tree.bools);
+
         assertTrue("Quad tree query error. query=0->2 result="+query, tree, (query.quad0==1 && query.quad1==1 && query.quad2==1 && query.quad3==0));
     }
 
@@ -91,27 +100,39 @@ public class SegmentTreeTests {
         FlatSegmentTree<SegmentTree.Data.RangeMaximumData<Integer>> tree = new FlatSegmentTree<SegmentTree.Data.RangeMaximumData<Integer>>(segments, 3);
 
         SegmentTree.Data.RangeMaximumData<Integer> query = tree.query(0, 7);
+        dataStruct.addBooleans(tree.bools);
+
         assertTrue("Segment tree query error. query=0->7 result="+query, tree, query.maximum==7);
 
         query = tree.query(0, 21);
+        dataStruct.addBooleans(tree.bools);
+
         assertTrue("Segment tree query error. query=0->21 result="+query, tree, query.maximum==10);
 
         // bounds checking
         {
             // max is first
             query = tree.query(2, 4);
+            dataStruct.addBooleans(tree.bools);
+
             assertTrue("Segment tree query error. query=2->4 result="+query, tree, query.maximum==6);
 
             // max is middle
             query = tree.query(4, 6);
+            dataStruct.addBooleans(tree.bools);
+
             assertTrue("Segment tree query error. query=4->6 result="+query, tree, query.maximum==5);
 
             // max is last
             query = tree.query(5, 7);
+            dataStruct.addBooleans(tree.bools);
+
             assertTrue("Segment tree query error. query=5->7 result="+query, tree, query.maximum==7);
         }
 
         query = tree.query(7); // stabbing
+        dataStruct.addBooleans(tree.bools);
+
         assertTrue("Segment tree query error. query=7 result="+query, tree, query.maximum==7);
     }
 
@@ -149,27 +170,41 @@ public class SegmentTreeTests {
         FlatSegmentTree<SegmentTree.Data.RangeMinimumData<Integer>> tree = new FlatSegmentTree<SegmentTree.Data.RangeMinimumData<Integer>>(segments, 5);
 
         SegmentTree.Data.RangeMinimumData<Integer> query = tree.query(0, 7);
+        dataStruct.addBooleans(tree.bools);
+
         assertTrue("Segment tree query error. query=0->7 result="+query, tree, query.minimum==0);
 
         query = tree.query(0, 17);
+        dataStruct.addBooleans(tree.bools);
+
         assertTrue("Segment tree query error. query=0->17 result="+query, tree, query.minimum==0);
 
         // bounds checking
         {
             // min is first
             query = tree.query(1, 3);
+            dataStruct.addBooleans(tree.bools);
+
             assertTrue("Segment tree query error. query=1->3 result="+query, tree, query.minimum==2);
 
             // min is middle
             query = tree.query(3, 5);
+            dataStruct.addBooleans(tree.bools);
+
             assertTrue("Segment tree query error. query=3->5 result="+query, tree, query.minimum==1);
 
             // min is last
             query = tree.query(1, 4);
+            dataStruct.addBooleans(tree.bools);
+            for(int i = 0; i < dataStruct.bools.length; i++) {
+            	System.out.println(i + ": "+ dataStruct.bools[i]);
+            }
             assertTrue("Segment tree query error. query=5->7 result="+query, tree, query.minimum==1);
         }
 
         query = tree.query(7); // stabbing
+        dataStruct.addBooleans(tree.bools);
+
         assertTrue("Segment tree query error. query=7 result="+query, tree, query.minimum==null);
     }
 
@@ -207,22 +242,37 @@ public class SegmentTreeTests {
         FlatSegmentTree<SegmentTree.Data.RangeSumData<Integer>> tree = new FlatSegmentTree<SegmentTree.Data.RangeSumData<Integer>>(segments, 10);
 
         SegmentTree.Data.RangeSumData<Integer> query = tree.query(0, 8);
+        dataStruct.addBooleans(tree.bools);
+
         assertTrue("Segment tree query error. query=0->8 result="+query, tree, query.sum==21);
 
         query = tree.query(0, 17);
+        dataStruct.addBooleans(tree.bools);
+
         assertTrue("Segment tree query error. query=0->17 result="+query, tree, query.sum==28);
 
         query = tree.query(2, 5);
+        dataStruct.addBooleans(tree.bools);
+
         assertTrue("Segment tree query error. query=2->5 result="+query, tree, query.sum==15);
 
         query = tree.query(10, 17);
+        dataStruct.addBooleans(tree.bools);
+
         assertTrue("Segment tree query error. query=10->17 result="+query, tree, query.sum==7);
 
         query = tree.query(16); // stabbing
+        dataStruct.addBooleans(tree.bools);
+
         assertTrue("Segment tree query error. query=16 result="+query, tree, query.sum==null);
 
         query = tree.query(17); // stabbing
+        dataStruct.addBooleans(tree.bools);
+ 
+        System.out.println(dataStruct.eval());
+
         assertTrue("Segment tree query error. query=17 result="+query, tree, query.sum==7);
+        
     }
 
     final String stravinsky = "Stravinsky";
@@ -258,6 +308,8 @@ public class SegmentTreeTests {
         // Try reverse order
         Collections.sort(segments,REVERSE);
         testLifespanSegmentTree(segments);
+        System.out.println(dataStruct.eval());
+
     }
 
     private void testLifespanSegmentTree(java.util.List<SegmentTree.Data.IntervalData<String>> segments) {   // Lifespan Interval Segment tree
@@ -411,6 +463,7 @@ public class SegmentTreeTests {
 
         query = tree.query(12,14); // Range query
         assertTrue("Segment Tree query error. returned=" + query, tree, collectionsEqual(query.getData(), Arrays.asList()));
+        write(Double.toString(dataStruct.eval()));
     }
     
     private static boolean collectionsEqual(Collection<?> c1, Collection<?> c2) {
@@ -433,4 +486,31 @@ public class SegmentTreeTests {
             toString = "\n"+obj.toString();
         Assert.assertTrue(msg+toString, isTrue);
     }
+    private static final String print(Integer[] array) {
+        return print(array, 0, array.length);
+    }
+
+    private static final String print(Integer[] array, int start, int length) {
+        final Integer[] clone = array.clone();
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i<length; i++) {
+            int e = clone[start+i];
+            builder.append(e+" ");
+        }
+        return builder.toString();
+    }
+    
+    
+public static void write(String msg) {
+    try{    
+        FileWriter fw=new FileWriter("/Users/isacarvidsson/Desktop/KTH/proggrund/java-algorithms-implementation/testout.txt");    
+        fw.write(msg);    
+        fw.close();    
+       }catch(Exception e){System.out.println(e);}    
+       System.out.println("msg");    
+      
+}
+    
+    
+    
 }

@@ -13,4 +13,19 @@ public class DataStruct{
 			}
 		}
 	}
+	
+	public double eval() {
+		int counter = 0;
+		for(int i = 0; i < bools.length; i++) {
+			if(bools[i]) {
+				counter = counter + 1;
+			}
+		}
+
+		
+		double ret = (double)counter / (double)bools.length;
+		return ret;
+		
+	}
+	
 }

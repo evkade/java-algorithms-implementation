@@ -80,10 +80,12 @@
       </classpath>
       <formatter type="brief" usefile="false" />
       <batchtest>
-        <fileset dir="${test}" includes="**/test/*.java" excludes="**/test/AllTests.java" />
+        <fileset dir="${test}" includes="**/test/SegmentTreeTests.java" excludes="**/test/AllTests.java" />
       </batchtest>
     </junit>
   </target>
+
+
 
   <target name="data_structures" depends="tests_jar" >
     <java classname="com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming">
@@ -93,55 +95,9 @@
     </java>
   </target>
 
-  <target name="mathematics" depends="tests_jar" >
-    <java classname="com.jwetherell.algorithms.mathematics.timing.MathematicsTiming">
-      <classpath>
-        <path refid="test.class.path" />
-      </classpath>
-    </java>
-  </target>
+  
 
-  <target name="numbers" depends="tests_jar" >
-    <java classname="com.jwetherell.algorithms.numbers.timing.NumbersTiming">
-      <classpath>
-        <path refid="test.class.path" />
-      </classpath>
-    </java>
-  </target>
-
-  <target name="search" depends="tests_jar" >
-    <java classname="com.jwetherell.algorithms.search.timing.SearchTiming">
-      <classpath>
-        <path refid="test.class.path" />
-      </classpath>
-    </java>
-  </target>
-
-  <target name="sequences" depends="tests_jar" >
-    <java classname="com.jwetherell.algorithms.sequence.timing.SequencesTiming">
-      <classpath>
-        <path refid="test.class.path" />
-      </classpath>
-    </java>
-  </target>
-
-  <target name="sorts" depends="tests_jar" >
-    <java classname="com.jwetherell.algorithms.sorts.timing.SortsTiming">
-      <classpath>
-        <path refid="test.class.path" />
-      </classpath>
-    </java>
-  </target>
-
-  <target name="strings" depends="tests_jar" >
-    <java classname="com.jwetherell.algorithms.strings.timing.StringsTiming">
-      <classpath>
-        <path refid="test.class.path" />
-      </classpath>
-    </java>
-  </target>
-
-  <target name="run_timing" depends="mathematics, numbers, search, sequences, strings, sorts, data_structures" />
+  <target name="run_timing" depends=" data_structures" />
 
   <target name="test" depends="run_tests, run_timing" />
 
