@@ -45,9 +45,9 @@ public class GraphTests {
         final Edge<Integer> e1 = new Edge<Integer>(1,p1,p2);
         edges.add(e1);
         
-        final Graph<Integer> graph = new Graph<Integer>(TYPE.DIRECTED, vertices, edges);
+        final Graph<Integer> graph = new Graph<Integer>(TYPE.UNDIRECTED, vertices, edges);
         
-        assertEquals(graph.getEdge(p1), e1);
+       Assert.assertTrue(p1.getEdge(p2).equals(e1));
         
    
     	
@@ -59,10 +59,10 @@ public class GraphTests {
     @Test
     public void testEquals() {
     	  final Vertex<Integer> p1 = new Vertex<Integer>(10,1);
-    	 
+    	  final Vertex<Integer> p2 = new Vertex<Integer>(10,2);
     	  final Edge<Integer> e1 = new Edge<Integer>(1,p1,p2);
     	  Assert.assertFalse(p1.equals(3));
-    	  Asser.assertFalse(e1.equals(3));
+    	  Assert.assertFalse(e1.equals(3));
     }
 
     @Test
