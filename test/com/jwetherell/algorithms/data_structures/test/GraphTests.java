@@ -31,6 +31,39 @@ public class GraphTests {
         Assert.assertTrue(p1.equals(p5) && p1.hashCode()==p5.hashCode());
         Assert.assertTrue(p5.equals(p1) && p5.hashCode()==p1.hashCode());
     }
+    /**
+     * Test coverage for getEdge() method
+     */
+    @Test
+    public void testGetEdge() {
+    	final List<Vertex<Integer>> vertices = new ArrayList<Vertex<Integer>>();
+        final Vertex<Integer> p1 = new Vertex<Integer>(10,1);
+        vertices.add(p1);
+        final Vertex<Integer> p2 = new Vertex<Integer>(10,2);
+        vertices.add(p2);
+        final List<Edge<Integer>> edges = new ArrayList<Edge<Integer>>();
+        final Edge<Integer> e1 = new Edge<Integer>(1,p1,p2);
+        edges.add(e1);
+        
+        final Graph<Integer> graph = new Graph<Integer>(TYPE.DIRECTED, vertices, edges);
+        
+        assertEquals(graph.getEdge(p1), e1);
+        
+   
+    	
+    }
+    
+    /**
+     * Test coverage for equals method
+     */
+    @Test
+    public void testEquals() {
+    	  final Vertex<Integer> p1 = new Vertex<Integer>(10,1);
+    	 
+    	  final Edge<Integer> e1 = new Edge<Integer>(1,p1,p2);
+    	  Assert.assertFalse(p1.equals(3));
+    	  Asser.assertFalse(e1.equals(3));
+    }
 
     @Test
     public void testEdge() {
