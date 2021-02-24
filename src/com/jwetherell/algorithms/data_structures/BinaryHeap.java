@@ -809,36 +809,29 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
             Node<T> nodeToMoveRight = nodeToMove.right;
             if (nodeLeft!=null && nodeLeft.equals(nodeToMove)) {
                 nodeToMove.right = nodeRight;
-                if (nodeRight != null) {
-                    //log 12
-                    heapDownHelper.increment(12);
-                    nodeRight.parent = nodeToMove;
-                }
+                setParent(nodeRight, nodeToMove);
 
                 nodeToMove.left = heapNode;
             } else {
                 nodeToMove.left = nodeLeft;
-                if (nodeLeft != null) {
-                    nodeLeft.parent = nodeToMove;
-                }
+                setParent(nodeLeft, nodeToMove);
 
                 nodeToMove.right = heapNode;
             }
             heapNode.parent = nodeToMove;
-
             heapNode.left = nodeToMoveLeft;
-            if (nodeToMoveLeft != null) {
-                nodeToMoveLeft.parent = heapNode;
-            }
+            setParent(nodeToMoveLeft, heapNode);
 
             heapNode.right = nodeToMoveRight;
-            if (nodeToMoveRight != null) {
+            setParent(nodeToMoveRight, heapNode);
 
             heapDown(node);
-                nodeToMoveRight.parent = heapNode;
+        }
+
+        private void setParent(Node<T> child, Node<T> parent) {
+            if (child != null) {
+                child.parent = parent;
             }
-
-            heapDown(node);
         }
 
         /**
