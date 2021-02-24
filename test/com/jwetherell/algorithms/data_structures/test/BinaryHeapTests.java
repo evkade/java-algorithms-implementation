@@ -50,6 +50,16 @@ public class BinaryHeapTests {
         tHeapNull.clear();
         assertNull(tHeapNull.getHeadValue()); // we expect null here
 
+        BinaryHeap.BinaryHeapTree<Integer> tHeapEqual = new BinaryHeap.BinaryHeapTree<Integer>(BinaryHeap.Type.MIN);
+        tHeapEqual.add(10);
+        tHeapEqual.add(11);
+        tHeapEqual.add(9);
+        tHeapEqual.add(10);
+        tHeapEqual.add(11);
+        tHeapEqual.remove(9);
+        assertEquals(10, tHeapEqual.getHeadValue());
+        testBranchLogs.add(tHeapEqual.getHeapDownBranchLog());
+
         // write the test branch coverage to the console
         System.out.println(testBranchLogs.size());
         printLogCoverage(testBranchLogs);
