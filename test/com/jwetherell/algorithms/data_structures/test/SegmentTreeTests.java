@@ -97,7 +97,7 @@ public class SegmentTreeTests {
     }
 
     private void testRangeMaxSegmentTree(java.util.List<SegmentTree.Data.RangeMaximumData<Integer>> segments) {   // Range Maximum Segment tree
-        FlatSegmentTree<SegmentTree.Data.RangeMaximumData<Integer>> tree = new FlatSegmentTree<SegmentTree.Data.RangeMaximumData<Integer>>(segments, 3);
+      FlatSegmentTree<SegmentTree.Data.RangeMaximumData<Integer>> tree = new FlatSegmentTree<SegmentTree.Data.RangeMaximumData<Integer>>(segments, 3);
 
         SegmentTree.Data.RangeMaximumData<Integer> query = tree.query(0, 7);
         dataStruct.addBooleans(tree.bools);
@@ -112,7 +112,7 @@ public class SegmentTreeTests {
         // bounds checking
         {
             // max is first
-            query = tree.query(2, 4);
+           query = tree.query(2, 4);
             dataStruct.addBooleans(tree.bools);
 
             assertTrue("Segment tree query error. query=2->4 result="+query, tree, query.maximum==6);
@@ -136,6 +136,23 @@ public class SegmentTreeTests {
         assertTrue("Segment tree query error. query=7 result="+query, tree, query.maximum==7);
     }
 
+    
+    public void testInputFlatSegmentTree(java.util.List<SegmentTree.Data.RangeMinimumData<Integer>> segments) {
+        FlatSegmentTree<SegmentTree.Data.RangeMinimumData<Integer>> tree = new FlatSegmentTree<SegmentTree.Data.RangeMinimumData<Integer>>(segments, 5);
+        //bools[2] start of query > this.end
+        SegmentTree.Data.RangeMinimumData<Integer> query = tree.query(1000, 1007);
+        //bools[3] end of query < start
+        query = tree.query(1, -1);
+        
+        java.util.List<SegmentTree.Data.RangeMinimumData<Integer>> segments2 = new ArrayList<SegmentTree.Data.RangeMinimumData<Integer>>();
+        segments2.add(new SegmentTree.Data.RangeMinimumData<Integer>(0,  (Integer) 7));
+        
+        FlatSegmentTree<SegmentTree.Data.RangeMinimumData<Integer>> tree2 = new FlatSegmentTree<SegmentTree.Data.RangeMinimumData<Integer>>(segments2);
+        SegmentTree.Data.RangeMinimumData<Integer> query2 = tree2.query(1, 3);
+
+    	
+    }
+    
     @Test
     public void testRangeMinSegmentTree() {
         java.util.List<SegmentTree.Data.RangeMinimumData<Integer>> segments = new ArrayList<SegmentTree.Data.RangeMinimumData<Integer>>();
@@ -156,6 +173,9 @@ public class SegmentTreeTests {
         // Randomize it
         Collections.shuffle(segments);
         testRangeMinSegmentTree(segments);
+        
+        //Isac och daniels tester 
+        testInputFlatSegmentTree(segments);
 
         // Try in order
         Collections.sort(segments);
@@ -167,7 +187,7 @@ public class SegmentTreeTests {
     }
 
     private void testRangeMinSegmentTree(java.util.List<SegmentTree.Data.RangeMinimumData<Integer>> segments) {   // Range Minimum Segment tree
-        FlatSegmentTree<SegmentTree.Data.RangeMinimumData<Integer>> tree = new FlatSegmentTree<SegmentTree.Data.RangeMinimumData<Integer>>(segments, 5);
+       FlatSegmentTree<SegmentTree.Data.RangeMinimumData<Integer>> tree = new FlatSegmentTree<SegmentTree.Data.RangeMinimumData<Integer>>(segments, 5);
 
         SegmentTree.Data.RangeMinimumData<Integer> query = tree.query(0, 7);
         dataStruct.addBooleans(tree.bools);
@@ -239,7 +259,7 @@ public class SegmentTreeTests {
     }
 
     private void testRangeSumSegmentTree(java.util.List<SegmentTree.Data.RangeSumData<Integer>> segments) {   // Range Sum Segment tree
-        FlatSegmentTree<SegmentTree.Data.RangeSumData<Integer>> tree = new FlatSegmentTree<SegmentTree.Data.RangeSumData<Integer>>(segments, 10);
+    	FlatSegmentTree<SegmentTree.Data.RangeSumData<Integer>> tree = new FlatSegmentTree<SegmentTree.Data.RangeSumData<Integer>>(segments, 10);
 
         SegmentTree.Data.RangeSumData<Integer> query = tree.query(0, 8);
         dataStruct.addBooleans(tree.bools);

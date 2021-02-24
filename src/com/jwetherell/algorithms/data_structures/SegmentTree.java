@@ -925,6 +925,7 @@ public abstract class SegmentTree<D extends SegmentTree.Data> {
 
         public FlatSegmentTree(List<D> data, int minLength) {
             if (data.size() <= 0)
+
                 throw new InvalidParameterException("Segments list is empty.");
 
             Collections.sort(data); // Make sure they are sorted
@@ -1075,9 +1076,12 @@ public abstract class SegmentTree<D extends SegmentTree.Data> {
             @Override
             public D query(long startOfQuery, long endOfQuery) {
                 if (startOfQuery == this.start && endOfQuery == this.end) {
+
                     bools[27] = true;
                     bools[28] = true;
                     if (this.data == null){
+                        System.out.println("null");
+
                         bools[0] = true;
                         return null;
                     }
@@ -1154,16 +1158,21 @@ public abstract class SegmentTree<D extends SegmentTree.Data> {
                         final Data q1 = this.getLeftChild().query(startOfQuery, getLeftChild().end);
                         final Data q2 = this.getRightChild().query(getRightChild().start, endOfQuery);
                         if (q1 == null && q2 == null){
+                            System.out.println("nått");
                             bools[17] = true;
                             bools[18] = true;
                             return null;
                         }
                         if (q1 != null && q2 == null){
+                            System.out.println("hitler");
+
                             bools[19] = true;
                             bools[20] = true;
                             return (D) q1;
                         }
                         if (q1 == null && q2 != null){
+                            System.out.println("swedus");
+
                             bools[21] = true;
                             bools[22] = true;
                             return (D) q2;
