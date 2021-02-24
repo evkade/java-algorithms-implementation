@@ -1,8 +1,5 @@
 package com.jwetherell.algorithms.data_structures.test;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNull;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -14,6 +11,8 @@ import com.jwetherell.algorithms.data_structures.test.common.JavaCollectionTest;
 import com.jwetherell.algorithms.data_structures.test.common.HeapTest;
 import com.jwetherell.algorithms.data_structures.test.common.Utils;
 import com.jwetherell.algorithms.data_structures.test.common.Utils.TestData;
+
+import static org.junit.Assert.*;
 
 public class BinaryHeapTests {
 
@@ -50,16 +49,10 @@ public class BinaryHeapTests {
         tHeapNull.add(11);
         tHeapNull.clear();
         assertNull(tHeapNull.getHeadValue()); // we expect null here
-        testBranchLogs.add(tHeapNull.getHeapDownBranchLog());
 
         // write the test branch coverage to the console
-        for(HashMap<Integer, Integer> log : testBranchLogs) {
-            System.out.println('{');
-            for(int branch : log.keySet()) {
-                System.out.print(String.format("  %d: %d\n", branch, log.getOrDefault(branch, 0)));
-            }
-            System.out.println('}');
-        }
+        System.out.println(testBranchLogs.size());
+        printLogCoverage(testBranchLogs);
 
     }
 
@@ -98,6 +91,10 @@ public class BinaryHeapTests {
         assertNull(tHeapNull.getHeadValue()); // we expect null here
 
         // write the test branch coverage to the console
+        printLogCoverage(testBranchLogs);
+    }
+
+    private void printLogCoverage(ArrayList<HashMap<Integer, Integer>> testBranchLogs) {
         for(HashMap<Integer, Integer> log : testBranchLogs) {
             System.out.println('{');
             for(int branch : log.keySet()) {
