@@ -29,5 +29,20 @@ public class HashMapTests {
 
         assertTrue(MapTest.testMap(map, Integer.class, mapName, data.unsorted, data.invalid));
         assertTrue(JavaMapTest.testJavaMap(jMap, Integer.class, mapName, data.unsorted, data.sorted, data.invalid));
+        
+        final int SMALL_SIZE = 10;
+        final int STRESS_FACTOR = 100;
+        map = new HashMap<>(HashMap.Type.PROBING, SMALL_SIZE);
+        sizeStressTest(map, SMALL_SIZE, STRESS_FACTOR);
+        assertTrue(map.size() > SMALL_SIZE);
+        map = new HashMap<>(HashMap.Type.CHAINING, SMALL_SIZE);
+        sizeStressTest(map, SMALL_SIZE, STRESS_FACTOR);
+        assertTrue(map.size() > SMALL_SIZE);
+    }
+
+    private void sizeStressTest(HashMap<Integer, String> map, int size, int factor) {
+        for (int i = 0; i < size * factor; i++) {
+            map.put(i, null);
+        }
     }
 }
