@@ -71,7 +71,7 @@
     <!-- Put everything in ${build} into the java-algorithms-implementation-tests-${DSTAMP}.jar file -->
     <jar jarfile="${dist}/java-algorithms-implementation-tests-${DSTAMP}.jar" basedir="${build}"/>
   </target>
-
+<!--
   <target name="run_tests" depends="tests_jar">
     <junit printsummary="on" haltonfailure="yes">
       <jvmarg value="-server"/>
@@ -84,7 +84,20 @@
       </batchtest>
     </junit>
   </target>
-
+-->
+  <target name="run_tests" depends="tests_jar">
+    <junit printsummary="on" haltonfailure="yes">
+      <jvmarg value="-server"/>
+      <classpath>
+        <path refid="test.class.path" />
+      </classpath>
+      <formatter type="brief" usefile="false" />
+      <batchtest>
+        <fileset dir="${test}" includes="**/test/SplayTreeTests.java" excludes="**/test/AllTests.java" />
+      </batchtest>
+    </junit>
+  </target>
+  
   <target name="data_structures" depends="tests_jar" >
     <java classname="com.jwetherell.algorithms.data_structures.timing.DataStructuresTiming">
       <classpath>
