@@ -233,6 +233,7 @@ public class Graph<T extends Comparable<T>> {
                 if (e.to.equals(v))
                     return true;
             }
+            
             return false;
         }
 

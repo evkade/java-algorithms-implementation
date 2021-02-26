@@ -57,6 +57,38 @@ public class GraphTests {
         Assert.assertTrue(e1.equals(e5) && e1.hashCode()==e5.hashCode());
         Assert.assertTrue(e5.equals(e1) && e5.hashCode()==e1.hashCode());
     }
+    
+    @Test
+    public void testPathTo() {
+        final Vertex<Integer> p1 = new Vertex<Integer>(10,1);
+        final Vertex<Integer> p2 = new Vertex<Integer>(10,2);
+        final Vertex<Integer> p3 = new Vertex<Integer>(20,1);
+        final Vertex<Integer> p4 = new Vertex<Integer>(10,1);
+
+        final Edge<Integer> e1 = new Edge<Integer>(1,p1,p2);
+        final Edge<Integer> e2 = new Edge<Integer>(1,p2,p1);
+        final Edge<Integer> e3 = new Edge<Integer>(2,p1,p2);
+        final Edge<Integer> e4 = new Edge<Integer>(1,p1,p3);
+        final Edge<Integer> e5 = new Edge<Integer>(1,p4,p2);
+        
+        Assert.assertFalse(p1.pathTo(p3));
+    }
+    @Test
+    public void testCompereTo() {
+        final Graph.CostVertexPair<Integer> p1 = new Graph.CostVertexPair<Integer>(1, new Vertex<Integer>(10));
+        final Graph.CostVertexPair<Integer> p2 = new Graph.CostVertexPair<Integer>(1, new Vertex<Integer>(11));
+        final Graph.CostVertexPair<Integer> p3 = new Graph.CostVertexPair<Integer>(2, new Vertex<Integer>(10));
+        final Graph.CostVertexPair<Integer> p4 = new Graph.CostVertexPair<Integer>(1, new Vertex<Integer>(10));
+
+        Assert.assertFalse(p1.equals(p2));
+        Assert.assertFalse(p2.equals(p1));
+        Assert.assertFalse(p1.equals(p3));
+        Assert.assertFalse(p3.equals(p1));
+        Assert.assertTrue(p3.compareTo(p1) == 1);
+        Assert.assertTrue(p1.compareTo(p3) == -1);
+
+    	
+    }
 
     @Test
     public void testGraph() {
