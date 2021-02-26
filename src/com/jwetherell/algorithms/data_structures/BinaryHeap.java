@@ -184,7 +184,7 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
         }
 
         protected void heapDown(int index) {
-            System.out.println("heapDown");
+            // System.out.println("heapDown");
             T value = this.array[index];
             if (value == null) {
                 bools[0] = true;
