@@ -1080,9 +1080,7 @@ public abstract class SegmentTree<D extends SegmentTree.Data> {
                 }
 
                 if (!this.hasChildren()) {
-                    if (endOfQuery < this.start || startOfQuery > this.end) {
-                        // Ignore
-                    } else {
+                    if (!(endOfQuery < this.start || startOfQuery > this.end)) {
                         D dataToReturn = null;
                         if (this.set.size() == 0)
                             return dataToReturn;
@@ -1107,14 +1105,7 @@ public abstract class SegmentTree<D extends SegmentTree.Data> {
                     if (startOfQuery <= this.getLeftChild().end && endOfQuery > this.getLeftChild().end) {
                         final Data q1 = this.getLeftChild().query(startOfQuery, getLeftChild().end);
                         final Data q2 = this.getRightChild().query(getRightChild().start, endOfQuery);
-                        if (q1 == null && q2 == null)
-                            return null;
-                        if (q1 != null && q2 == null)
-                            return (D) q1;
-                        if (q1 == null && q2 != null)
-                            return (D) q2;
-                        if (q1 != null && q2 != null) 
-                            return ((D) q1.combined(q2));
+                        return getNonNullChildren(q1, q2);
                     } else if (startOfQuery <= this.getLeftChild().end && endOfQuery <= this.getLeftChild().end) {
                         return this.getLeftChild().query(startOfQuery, endOfQuery);
                     }
@@ -1123,7 +1114,17 @@ public abstract class SegmentTree<D extends SegmentTree.Data> {
 
                 return null;
             }
-
+            private D getNonNullChildren(Data q1, Data q2){
+                if (q1 == null && q2 == null)
+                    return null;
+                if (q1 != null && q2 == null)
+                    return (D) q1;
+                if (q1 == null && q2 != null)
+                    return (D) q2;
+                if (q1 != null && q2 != null) 
+                    return ((D) q1.combined(q2));
+                return null;
+            }
             /**
              * {@inheritDoc}
              */
