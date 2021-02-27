@@ -1,3 +1,9 @@
+# BRANCH SUMMARY:
+## Refactoring by Ayub Atif
+* Improve coverage for functions in BinaryHeap and HashMap
+* Refactor code complexity in BinaryHeapTree heapDown()
+* Pull Request only after conforming to Repo standards [WIP]
+
 Java : Algorithms and Data Structure ![alt tag](https://api.travis-ci.org/phishman3579/java-algorithms-implementation.svg?branch=master)
 ==============================
 
